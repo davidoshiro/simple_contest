@@ -1,4 +1,13 @@
 <?php
+/**
+ * @author David Oshiro
+ * 
+ * Contestant Class
+ * 
+ * Contestant DB model. The Contestant belongs to the Contest model.
+ * Requires DB Class.
+ */
+ 
 	require_once("DB.php");
 	
 	class Contestant{
@@ -12,12 +21,18 @@
 		public $updated_at;
 		public $errors;
 		
+		/**
+		 * Class constructor. Sets default values.
+		 */
 		public function __construct(){
 			$cur_datetime = new DateTime();
 			$this->created_at = $cur_datetime->format('Y-m-d H:i:s');
 			$this->updated_at = $cur_datetime->format('Y-m-d H:i:s');
 		}
 		
+		/**
+		 * Performs select queries and saves resultset instance variable.
+		 */
 		public function find($where = null, $order = null){
 			$db_conn = new DB();
 			$db_conn->select('contestants', '*', null, $where, $order);
@@ -25,6 +40,9 @@
 			return $db_conn->get_resultset();
 		}
 		
+		/** 
+		 * Creates a new record.
+		 */
 		public function create(){
 			$is_valid = true;
 			$validation_errors = array();

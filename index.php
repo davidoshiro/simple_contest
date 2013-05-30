@@ -1,4 +1,5 @@
 <?php
+	// Load models
 	require_once('Contest.php');
 	require_once('Contestant.php');
 	
@@ -23,7 +24,7 @@
 		$contestant = new Contestant();
 		$display_div = "create";
 		
-		# Compile answers
+		# Compile multiple answers to JSON string
 		$answers = array();
 		foreach($_POST as $key=>$value){
 			if(substr($key, 0, 6) == 'answer'){
@@ -134,15 +135,24 @@
 		<script>
 			var answer_count = 1;
 			
+			/**
+			 * Appends a new answer field to the form
+			 */
 			function add_answer(){
 				answer_count++;
 				$('form div#answers').append("<div><div id='answer_" + answer_count + "' class='input-append'><input type='text' name='answer_" + answer_count + "' id='answer_" + answer_count + "' required><button class='btn' onclick='remove_answer(\"div div#answer_" + answer_count + "\");return false;'>Remove</button><button class='btn' type='button' onclick='add_answer();'>Add</button></div></div>");
 			}
 			
+			/**
+			 * Removes current answer field from form
+			 */
 			function remove_answer(id){
 				$(id).css('display', 'none');
 			}
 			
+			/**
+			 * Configure client-side form validation.
+			 */
 			$(document).ready(function(){
 				$('#contest_form').isHappy({
 					fields:{
